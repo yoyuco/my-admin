@@ -1345,7 +1345,7 @@ CREATE OR REPLACE FUNCTION "public"."call_fetch_exchange_rates_edge_function"() 
     AS $$
 DECLARE
   edge_function_url text := 'https://nxlrnwijsxqalcxyavkj.supabase.co/functions/v1/fetch-exchange-rates';
-  service_role_key text := '***REMOVED_SECRET***';
+  service_role_key text := 'COMPROMISED_KEY_REMOVED_ROTATE_REQUIRED';
   request_id bigint;
 BEGIN
   -- Call the edge function using pg_net with service role key
@@ -9579,7 +9579,7 @@ CREATE OR REPLACE FUNCTION "public"."simple_exchange_rate_cron"() RETURNS "void"
     AS $$
 DECLARE
     v_edge_function_url TEXT := 'https://nxlrnwijsxqalcxyavkj.supabase.co/functions/v1/fetch-exchange-rates';
-    v_service_role_key TEXT := '***REMOVED_SECRET***';
+    v_service_role_key TEXT := 'COMPROMISED_KEY_REMOVED_ROTATE_REQUIRED';
     v_request_id BIGINT;
     v_response TEXT;
     v_status_code INTEGER;
@@ -10415,8 +10415,8 @@ BEGIN
     PERFORM net.http_get(
         'https://nxlrnwijsxqalcxyavkj.supabase.co/functions/v1/fetch-exchange-rates',
         jsonb_build_object(
-            'Authorization', 'Bearer ***REMOVED_SECRET***',
-            'apikey', '***REMOVED_SECRET***'
+            'Authorization', 'Bearer COMPROMISED_KEY_REMOVED_ROTATE_REQUIRED',
+            'apikey', 'COMPROMISED_KEY_REMOVED_ROTATE_REQUIRED'
         )
     );
     
