@@ -278,9 +278,16 @@ serve(async (req) => {
   }
 
   try {
-    // Initialize Supabase client
+    // Initialize Supabase client.
+    // Prefer SB_SECRET_KEY (new-style sb_secret_* key, survives disabling legacy
+    // JWT keys); fall back to the platform-injected legacy key so this keeps
+    // working before the migration is finished.
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabaseKey =
+      Deno.env.get('SB_SECRET_KEY') ?? Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    if (!supabaseKey) {
+      throw new Error('Missing SB_SECRET_KEY (and no legacy SUPABASE_SERVICE_ROLE_KEY)')
+    }
     const supabase = createClient(supabaseUrl, supabaseKey)
 
     // Get active configuration
